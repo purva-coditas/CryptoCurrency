@@ -1,13 +1,13 @@
 import { AgGridReact } from 'ag-grid-react';
 
 import axios from 'axios';
-import React, { memo, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { CoinProps } from './CoinProps';
 import IconRenderer from './IconRenderer';
 import NameLinks from './NameLinks';
-// import NameLinks from './NameLinks';
 
 const CoinsList: React.FC = () => {
+  const gridRef = useRef(null);
   const [coins, setCoins] = useState<CoinProps[] | undefined>();
 
   useEffect(() => {
@@ -37,6 +37,9 @@ const CoinsList: React.FC = () => {
     return params.value >= 0 ? 'price-green' : 'price-red';
   }
 
+  const onSelectionChanged = () => {
+    const selectedRowData = gridRef.current.api.getSelectedRows();
+  };
   // columns in table
 
   const columnDefs = [
@@ -57,8 +60,16 @@ const CoinsList: React.FC = () => {
       // maxWidth: 500,
     },
     { field: 'symbol', maxWidth: 100 },
-    { field: 'marketCap', sortable: true, valueFormatter: currencyFormatter },
-    { field: 'price', sortable: true, valueFormatter: currencyFormatter },
+    {
+      field: 'marketCap',
+      sortable: true,
+      valueFormatter: currencyFormatter,
+    },
+    {
+      field: 'price',
+      sortable: true,
+      valueFormatter: currencyFormatter,
+    },
     {
       field: 'volume',
       sortable: true,
@@ -92,7 +103,13 @@ const CoinsList: React.FC = () => {
     <>
       <h1>Coins List</h1>
       <div className="ag-theme-alpine" style={{ height: 900 }}>
-        <AgGridReact rowData={coins} columnDefs={columnDefs} />
+        <AgGridReact
+          ref={gridRef}
+          rowData={coins}
+          columnDefs={columnDefs}
+          rowSelection={'single'}
+          onSelectionChanged={onSelectionChanged}
+        />
       </div>
     </>
   );
