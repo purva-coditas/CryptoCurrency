@@ -1,19 +1,19 @@
-import { AgGridReact } from 'ag-grid-react';
+import { AgGridReact } from "ag-grid-react";
 
-import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
-import { CoinProps } from './CoinProps';
-import IconRenderer from './IconRenderer';
-import NameLinks from './NameLinks';
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
+import { CoinProps } from "./CoinProps";
+import IconRenderer from "./IconRenderer";
+import NameLinks from "./NameLinks";
 
 const CoinsList: React.FC = () => {
   const gridRef = useRef(null);
   const [coins, setCoins] = useState<CoinProps[] | undefined>();
-
+  const [coinData, setcoinData] = useState<CoinProps | undefined>();
   useEffect(() => {
     axios
       .get(
-        'https://api.coinstats.app/public/v1/coins?skip=0&limit=5&currency=EUR'
+        "https://api.coinstats.app/public/v1/coins?skip=0&limit=5&currency=EUR"
       )
       .then((response) => {
         setCoins(response.data.coins);
@@ -22,77 +22,70 @@ const CoinsList: React.FC = () => {
 
   //Formators to add commas and currency to the columns
   function currencyFormatter(params: any): string {
-    return '£' + formatNumber(params.value);
+    return "£" + formatNumber(params.value);
   }
 
   function formatNumber(number: number) {
     return Math.floor(number)
       .toString()
-      .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+      .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
   }
 
   // price formattor
 
   function priceFormattor(params: any) {
-    return params.value >= 0 ? 'price-green' : 'price-red';
+    return params.value >= 0 ? "price-green" : "price-red";
   }
-
-  const onSelectionChanged = () => {
-    const selectedRowData = gridRef.current.api.getSelectedRows();
-  };
-  // columns in table
-
+  // columns in table;
   const columnDefs = [
-    { field: 'rank', maxWidth: 80 },
+    { field: "rank", maxWidth: 80 },
     {
-      field: 'icon',
-      headerName: '',
+      field: "icon",
+      headerName: "",
       cellRenderer: IconRenderer,
-      // colSpan: (params: any) => (!params ? 2 : 1),
       maxWidth: 40,
     },
     {
-      field: 'name',
+      field: "name",
       cellRenderer: NameLinks,
-      cellRendererParams: {
-        color: 'red',
-      },
+
       // maxWidth: 500,
+      valueGetter: "data.id",
     },
-    { field: 'symbol', maxWidth: 100 },
+    { field: "symbol", maxWidth: 100 },
     {
-      field: 'marketCap',
+      field: "marketCap",
       sortable: true,
       valueFormatter: currencyFormatter,
     },
     {
-      field: 'price',
+      field: "price",
       sortable: true,
       valueFormatter: currencyFormatter,
     },
     {
-      field: 'volume',
+      field: "volume",
       sortable: true,
-      cellClass: ['volume-column-color'],
+      cellClass: ["volume-column-color"],
       valueFormatter: currencyFormatter,
     },
     {
-      headerName: '% 1h',
-      field: 'priceChange1h',
+      headerName: "% 1h",
+      field: "priceChange1h",
       maxWidth: 80,
       sortable: true,
       cellClass: priceFormattor,
     },
     {
-      headerName: '% 24h',
-      field: 'priceChange1d',
+      headerName: "% 24h",
+      field: "priceChange1d",
       maxWidth: 80,
       sortable: true,
       cellClass: priceFormattor,
     },
     {
-      headerName: '% 7d',
-      field: 'priceChange1w',
+      headerName: "% 7d",
+      field: "priceChange1w",
       maxWidth: 80,
       sortable: true,
       cellClass: priceFormattor,
@@ -103,13 +96,7 @@ const CoinsList: React.FC = () => {
     <>
       <h1>Coins List</h1>
       <div className="ag-theme-alpine" style={{ height: 900 }}>
-        <AgGridReact
-          ref={gridRef}
-          rowData={coins}
-          columnDefs={columnDefs}
-          rowSelection={'single'}
-          onSelectionChanged={onSelectionChanged}
-        />
+        <AgGridReact ref={gridRef} rowData={coins} columnDefs={columnDefs} />
       </div>
     </>
   );
