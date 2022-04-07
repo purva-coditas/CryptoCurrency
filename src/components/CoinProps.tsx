@@ -6,6 +6,8 @@ export interface CoinProps {
   rank: number;
   price: number;
   marketCap: number;
+  totalSupply: number;
+  availableSupply: number;
   volume: number;
   priceChange1h: number;
   priceChange1d: number;

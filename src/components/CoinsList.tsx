@@ -9,7 +9,6 @@ import NameLinks from "./NameLinks";
 const CoinsList: React.FC = () => {
   const gridRef = useRef(null);
   const [coins, setCoins] = useState<CoinProps[] | undefined>();
-  const [coinData, setcoinData] = useState<CoinProps | undefined>();
   useEffect(() => {
     axios
       .get(
