@@ -1,9 +1,10 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import CoinsList from "./components/CoinsList";
-import CoinDisplayPage from "./components/CoinDisplayPage";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import "./styles/app.scss";
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import './styles/app.scss';
+import CoinsList from './components/CoinsList/CoinsList';
+import CoinDisplayPage from './components/CoinDetails/CoinDisplayPage';
 
 const App = () => {
   return (
@@ -11,14 +12,11 @@ const App = () => {
       <Router>
         <Switch>
           <Route exact path="/" component={CoinsList} />
-          <Route
-            path="/coinDisplayPage/:id"
-            render={(props) => <CoinDisplayPage {...props} />}
-          />
+          <Route path="/coinDisplayPage/:id" component={CoinDisplayPage} />
         </Switch>
       </Router>
     </div>
   );
 };
 
-ReactDOM.render(<App />, document.getElementById("app"));
+ReactDOM.render(<App />, document.getElementById('app'));

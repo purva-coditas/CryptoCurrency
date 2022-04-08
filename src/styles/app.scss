@@ -1,7 +1,8 @@
 @import 'ag-grid-community/src/styles/ag-grid.scss';
 @import 'ag-grid-community/src/styles/ag-theme-alpine/sass/ag-theme-alpine-mixin.scss';
-@import '../components/Coins.scss';
-
+@import '../components/CoinsList/Coins.scss';
+@import './base';
+@import '../components/CoinDetails/Detail.scss';
 .ag-theme-alpine {
   @include ag-theme-alpine(
     (
