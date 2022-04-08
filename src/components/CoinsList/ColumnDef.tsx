@@ -14,6 +14,8 @@ const columnDefs = [
   {
     field: 'name',
     cellRenderer: NameLinks,
+
+    // maxWidth: 500,
     valueGetter: 'data.id',
   },
   { field: 'symbol', maxWidth: 100 },
