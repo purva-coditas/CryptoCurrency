@@ -12,4 +12,5 @@ export interface CoinProps {
   priceChange1h: number;
   priceChange1d: number;
   priceChange1w: number;
+  websiteUrl: string;
 }
