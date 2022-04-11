@@ -13,6 +13,7 @@ import CustomizedProgressBars from "./Progressbar";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { CoinProps } from "../CoinsList/CoinProps";
+import CoinsList from "../CoinsList";
 
 const CoinDisplayPage = (props: any) => {
   const [coin, setCoin] = useState<CoinProps | undefined>();
@@ -91,9 +92,13 @@ const CoinDisplayPage = (props: any) => {
               }}
             >
               <div className={"flexcard"}>
-                <span className={"headings"}>Market Cap </span>
-
-                <InfoTwoToneIcon fontSize="small" />
+                <span className={"headings"}>
+                  Market Cap{" "}
+                  <InfoTwoToneIcon
+                    style={{ verticalAlign: "middle" }}
+                    fontSize="small"
+                  />
+                </span>
 
                 <span className={"price"}>${coin && coin.marketCap}</span>
                 <br />
@@ -106,17 +111,27 @@ const CoinDisplayPage = (props: any) => {
                 >
                   <div style={{ top: 10 }}>
                     {coin && coin.priceChange1w > 0 ? (
-                      <ArrowDropUpIcon />
+                      <span style={{ verticalAlign: "middle" }}>
+                        <ArrowDropUpIcon />
+                      </span>
                     ) : (
-                      <ArrowDropDownIcon />
+                      <span style={{ verticalAlign: "middle" }}>
+                        <ArrowDropDownIcon />
+                      </span>
                     )}
                     <span>{coin && coin.priceChange1w}%</span>
                   </div>
                 </div>
               </div>
               <div className={"flexcard"}>
-                <span className={"headings"}>Fully Diluted Market Cap</span>
-                <InfoTwoToneIcon fontSize="small" />
+                <span className={"headings"}>
+                  Fully Diluted Market Cap{" "}
+                  <InfoTwoToneIcon
+                    style={{ verticalAlign: "middle" }}
+                    fontSize="small"
+                  />
+                </span>
+
                 <span className={"price"}>
                   $
                   {coin &&
@@ -133,9 +148,13 @@ const CoinDisplayPage = (props: any) => {
                 >
                   <div style={{ top: 10 }}>
                     {coin && coin.priceChange1h > 0 ? (
-                      <ArrowDropUpIcon />
+                      <span style={{ verticalAlign: "middle" }}>
+                        <ArrowDropUpIcon />
+                      </span>
                     ) : (
-                      <ArrowDropDownIcon />
+                      <span style={{ verticalAlign: "middle" }}>
+                        <ArrowDropDownIcon />
+                      </span>
                     )}
                     <span>{coin && coin.priceChange1h}%</span>
                   </div>
@@ -144,8 +163,12 @@ const CoinDisplayPage = (props: any) => {
               <div className={"flexcard"}>
                 <span className={"headings"}>
                   Volume <span className={"symbolsummary"}>24h</span>{" "}
+                  <InfoTwoToneIcon
+                    style={{ verticalAlign: "middle" }}
+                    fontSize="small"
+                  />
                 </span>
-                <InfoTwoToneIcon fontSize="small" />
+
                 <span className={"price"}>
                   ${coin && Math.floor(coin.volume)}
                 </span>
@@ -158,9 +181,13 @@ const CoinDisplayPage = (props: any) => {
                 >
                   <div style={{ top: 10 }}>
                     {coin && coin.priceChange1d > 0 ? (
-                      <ArrowDropUpIcon />
+                      <span style={{ verticalAlign: "middle" }}>
+                        <ArrowDropUpIcon />
+                      </span>
                     ) : (
-                      <ArrowDropDownIcon />
+                      <span style={{ verticalAlign: "middle" }}>
+                        <ArrowDropDownIcon />
+                      </span>
                     )}
                     <span>{coin && coin.priceChange1d}%</span>
                   </div>
@@ -180,8 +207,14 @@ const CoinDisplayPage = (props: any) => {
                 }}
               >
                 <div>
-                  <span className={"headings"}>Circulating Supply</span>
-                  <InfoTwoToneIcon fontSize="small" />
+                  <span className={"headings"}>
+                    Circulating Supply{" "}
+                    <InfoTwoToneIcon
+                      style={{ verticalAlign: "middle" }}
+                      fontSize="small"
+                    />
+                  </span>
+
                   <br />
                   <span className={"price"}>
                     ${coin && Math.floor(coin.marketCap / coin.price)}
@@ -201,8 +234,12 @@ const CoinDisplayPage = (props: any) => {
                 </span>
 
                 <div style={{ textAlign: "left", margin: "5px" }}>
-                  <span>
-                    Max Supply <InfoTwoToneIcon fontSize="small" />
+                  <span className={"headings"}>
+                    Max Supply{" "}
+                    <InfoTwoToneIcon
+                      style={{ verticalAlign: "middle" }}
+                      fontSize="small"
+                    />
                   </span>
 
                   <span
@@ -214,8 +251,12 @@ const CoinDisplayPage = (props: any) => {
                     )}
                   </span>
                   <br />
-                  <span>
-                    Total Supply <InfoTwoToneIcon fontSize="small" />
+                  <span className={"headings"}>
+                    Total Supply{" "}
+                    <InfoTwoToneIcon
+                      style={{ verticalAlign: "middle" }}
+                      fontSize="small"
+                    />
                   </span>
 
                   <span
