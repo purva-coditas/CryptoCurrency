@@ -1,16 +1,27 @@
 import React, { useEffect, useState } from "react";
+import "./CardUI.scss";
+import LinkIcon from "@mui/icons-material/Link";
+import IosShareIcon from "@mui/icons-material/IosShare";
 import Grid from "@mui/material/Grid";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import InfoTwoToneIcon from "@mui/icons-material/InfoTwoTone";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import Paper from "@mui/material/Paper";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
+import { styled } from "@mui/material/styles";
+import CustomizedProgressBars from "./Progressbar";
+import axios from "axios";
 import { useParams } from "react-router-dom";
 import { CoinProps } from "./CoinProps";
-import axios from "axios";
 const CoinDisplayPage = (props: any) => {
   const [coin, setCoin] = useState<CoinProps | undefined>();
   const { id }: { id: string } = useParams();
+
+  const progress = Math.floor(
+    (coin && coin.availableSupply / coin.totalSupply) * 100
+  );
+
   useEffect(() => {
     axios
       .get(`https://api.coinstats.app/public/v1/coins/${id}`)
@@ -21,8 +32,6 @@ const CoinDisplayPage = (props: any) => {
 
   return (
     <div>
-      <h1>coindetails Page</h1>
-      {console.log(coin)}
       <Breadcrumbs
         separator={<NavigateNextIcon fontSize="small" />}
         aria-label="breadcrumb"
@@ -31,78 +40,193 @@ const CoinDisplayPage = (props: any) => {
         <Link>coin</Link>
         <Link>{coin && coin.name}</Link>
       </Breadcrumbs>
-      <Grid container>
-        <Grid item md={2}>
+
+      <Grid container style={{ margin: "20px" }}>
+        <Grid item xs={3}>
           <span>
-            <img src={coin && coin.icon} alt="something" />
+            <img
+              src={coin && coin.icon}
+              alt="coin Logo"
+              height={30}
+              width={30}
+            />
           </span>
-          <span> {coin && coin.name}</span>
+          <span
+            style={{ marginLeft: "10px", fontSize: "30px", fontWeight: "600" }}
+          >
+            {coin && coin.name}
+          </span>
+          <span className={"symbolsummary"}>{coin && coin.symbol}</span>
         </Grid>
-        <Grid item md={10}>
-          <div>
-            <span>{coin && coin.name}</span> Price (
-            <span>{coin && coin.symbol}</span>)
+        <Grid item xs={9}>
+          <div style={{ color: "rgb(169, 169, 169)" }}>
+            <span>{coin && coin.name}</span>
+            Price (<span>{coin && coin.symbol}</span>)
           </div>
-          <div>
-            <h3>${coin && coin.price}</h3>
-          </div>
-          <Grid container spacing={3}>
-            <Grid item md={3}>
-              <Paper elevation={2}>
+
+          <span style={{ fontSize: "30px", fontWeight: "600" }}>
+            ${coin && coin.price}
+          </span>
+          <span className={"pricesummary"}>
+            <ArrowDropDownIcon /> 0.70%
+          </span>
+        </Grid>
+        <Grid container>
+          <Grid item xs={3}>
+            <div>
+              <span className={"ranksummary"}>Rank # {coin && coin.rank}</span>
+              <br />
+              <span className={"linksummary"}>
+                <LinkIcon fontSize="small" /> {coin && coin.websiteUrl}
+                <IosShareIcon fontSize="small" />
+              </span>
+            </div>
+          </Grid>
+          <Grid item xs={9}>
+            <div
+              style={{
+                display: "flex",
+                marginTop: "40px",
+                borderTop: "2px solid #dee2e6",
+              }}
+            >
+              <div className={"flexcard"}>
+                <span className={"headings"}>Market Cap </span>
+
+                <InfoTwoToneIcon fontSize="small" />
+
+                <span className={"price"}>${coin && coin.marketCap}</span>
+                <br />
+                <div
+                  className={
+                    coin && coin.priceChange1w > 0
+                      ? "marketpositive"
+                      : "marketnegative"
+                  }
+                >
+                  <div style={{ top: 10 }}>
+                    {coin && coin.priceChange1w > 0 ? (
+                      <ArrowDropUpIcon />
+                    ) : (
+                      <ArrowDropDownIcon />
+                    )}
+                    <span>{coin && coin.priceChange1w}%</span>
+                  </div>
+                </div>
+              </div>
+              <div className={"flexcard"}>
+                <span className={"headings"}>Fully Diluted Market Cap</span>
+                <InfoTwoToneIcon fontSize="small" />
+                <span className={"price"}>
+                  $
+                  {coin &&
+                    (coin && coin.availableSupply + coin.totalSupply) *
+                      coin.price}
+                </span>
+                <br />
+                <div
+                  className={
+                    coin && coin.priceChange1h > 0
+                      ? "marketpositive"
+                      : "marketnegative"
+                  }
+                >
+                  <div style={{ top: 10 }}>
+                    {coin && coin.priceChange1h > 0 ? (
+                      <ArrowDropUpIcon />
+                    ) : (
+                      <ArrowDropDownIcon />
+                    )}
+                    <span>{coin && coin.priceChange1h}%</span>
+                  </div>
+                </div>
+              </div>
+              <div className={"flexcard"}>
+                <span className={"headings"}>
+                  Volume <span className={"symbolsummary"}>24h</span>{" "}
+                </span>
+                <InfoTwoToneIcon fontSize="small" />
+                <span className={"price"}>
+                  ${coin && Math.floor(coin.volume)}
+                </span>
+                <div
+                  className={
+                    coin && coin.priceChange1d > 0
+                      ? "marketpositive"
+                      : "marketnegative"
+                  }
+                >
+                  <div style={{ top: 10 }}>
+                    {coin && coin.priceChange1d > 0 ? (
+                      <ArrowDropUpIcon />
+                    ) : (
+                      <ArrowDropDownIcon />
+                    )}
+                    <span>{coin && coin.priceChange1d}%</span>
+                  </div>
+                </div>
+                <span className={"headings"}>Volume/Market Cap</span>
+                <br />
+                <span className={"price"}>
+                  ${coin && (coin.volume / coin.marketCap).toFixed(5)}
+                </span>
+              </div>
+
+              <div
+                className={"flexcard"}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
                 <div>
-                  <span>Market Cap </span>
-                  <span>
-                    <InfoTwoToneIcon fontSize="small" />
+                  <span className={"headings"}>Circulating Supply</span>
+                  <InfoTwoToneIcon fontSize="small" />
+                  <br />
+                  <span className={"price"}>
+                    ${coin && Math.floor(coin.marketCap / coin.price)}
+                  </span>
+                  <span
+                    style={{
+                      textAlign: "right",
+                      color: "grey",
+                      marginLeft: "50px",
+                    }}
+                  >
+                    {progress}%
                   </span>
                 </div>
-                <div>${coin && coin.marketCap}</div>
-              </Paper>
-            </Grid>
+                <span style={{ margin: "20px 0" }}>
+                  <CustomizedProgressBars value={progress} />
+                </span>
 
-            <Grid item md={3}>
-              <Paper elevation={3}>
-                Fully Diluted Market Cap <InfoTwoToneIcon fontSize="small" />
-              </Paper>
-            </Grid>
+                <div style={{ textAlign: "left", margin: "5px" }}>
+                  <span>
+                    Max Supply <InfoTwoToneIcon fontSize="small" />
+                  </span>
 
-            <Grid item md={3}>
-              <Paper>
-                <Grid container>
-                  <Grid item>
-                    <div>
-                      Volume 24h <InfoTwoToneIcon fontSize="small" />
-                    </div>
-                    <div>${coin && coin.volume}</div>
-                  </Grid>
-                  <Grid item>
-                    <div>Volume/Market Cap</div>
-                    <div>${coin && coin.volume}</div>
-                  </Grid>
-                </Grid>
-              </Paper>
-            </Grid>
-            <Grid item md={3}>
-              <Paper>
-                Curculating Supply <InfoTwoToneIcon fontSize="small" />
-                {/* {coin && coin.totalSupply + coin && coin.availableSupply} */}
-                <Grid container>
-                  <Grid item md={6}>
-                    Max Supply
-                    <InfoTwoToneIcon fontSize="small" />
-                  </Grid>
-                  <Grid item md={6}>
-                    {coin && coin.totalSupply}
-                  </Grid>
-                  <Grid item md={6}>
-                    Total Supply
-                    <InfoTwoToneIcon fontSize="small" />
-                  </Grid>
-                  <Grid item md={6}>
-                    {coin && coin.totalSupply}
-                  </Grid>
-                </Grid>
-              </Paper>
-            </Grid>
+                  <span
+                    className={"price"}
+                    style={{ marginLeft: "15px", textAlign: "left" }}
+                  >
+                    {Math.floor(
+                      coin && coin.availableSupply + coin.totalSupply
+                    )}
+                  </span>
+                  <br />
+                  <span>
+                    Total Supply <InfoTwoToneIcon fontSize="small" />
+                  </span>
+
+                  <span
+                    className={"price"}
+                    style={{ marginLeft: "15px", textAlign: "left" }}
+                  >
+                    {Math.floor(coin && coin.totalSupply)}
+                  </span>
+                </div>
+              </div>
+            </div>
           </Grid>
         </Grid>
       </Grid>
