@@ -8,7 +8,7 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import InfoTwoToneIcon from "@mui/icons-material/InfoTwoTone";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Link from "@mui/material/Link";
+import { Link } from "react-router-dom";
 import CustomizedProgressBars from "./Progressbar";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -36,9 +36,9 @@ const CoinDisplayPage = (props: any) => {
         separator={<NavigateNextIcon fontSize="small" />}
         aria-label="breadcrumb"
       >
-        <Link>crypto</Link>
-        <Link>coin</Link>
-        <Link>{coin && coin.name}</Link>
+        <Link to={{ pathname: "/" }}>crypto</Link>
+        <Link to={{ pathname: "/" }}>coin</Link>
+        <Link to={{ pathname: "/coinDisplay" }}>{coin && coin.name}</Link>
       </Breadcrumbs>
 
       <Grid container style={{ margin: "20px" }}>
@@ -68,7 +68,8 @@ const CoinDisplayPage = (props: any) => {
             ${coin && coin.price}
           </span>
           <span className={"pricesummary"}>
-            <ArrowDropDownIcon /> 0.70%
+            <ArrowDropDownIcon style={{ verticalAlign: "middle" }} />{" "}
+            {coin && coin.priceChange1w}%
           </span>
         </Grid>
         <Grid container>
@@ -77,7 +78,8 @@ const CoinDisplayPage = (props: any) => {
               <span className={"ranksummary"}>Rank # {coin && coin.rank}</span>
               <br />
               <span className={"linksummary"}>
-                <LinkIcon fontSize="small" /> {coin && coin.websiteUrl}
+                <LinkIcon style={{}} fontSize="small" />{" "}
+                {coin && coin.websiteUrl}
                 <IosShareIcon fontSize="small" />
               </span>
             </div>
@@ -91,9 +93,9 @@ const CoinDisplayPage = (props: any) => {
               }}
             >
               <div className={"flexcard"}>
-                <span className={"headings"}>Market Cap </span>
-
-                <InfoTwoToneIcon fontSize="small" />
+                <span className={"headings"}>
+                  Market Cap <InfoTwoToneIcon fontSize="small" />{" "}
+                </span>
 
                 <span className={"price"}>${coin && coin.marketCap}</span>
                 <br />
@@ -106,17 +108,19 @@ const CoinDisplayPage = (props: any) => {
                 >
                   <div style={{ top: 10 }}>
                     {coin && coin.priceChange1w > 0 ? (
-                      <ArrowDropUpIcon />
+                      <ArrowDropUpIcon style={{ verticalAlign: "middle" }} />
                     ) : (
-                      <ArrowDropDownIcon />
+                      <ArrowDropDownIcon style={{ verticalAlign: "middle" }} />
                     )}
                     <span>{coin && coin.priceChange1w}%</span>
                   </div>
                 </div>
               </div>
               <div className={"flexcard"}>
-                <span className={"headings"}>Fully Diluted Market Cap</span>
-                <InfoTwoToneIcon fontSize="small" />
+                <span className={"headings"}>
+                  Fully Diluted Market Cap <InfoTwoToneIcon fontSize="small" />
+                </span>
+
                 <span className={"price"}>
                   $
                   {coin &&
@@ -133,9 +137,9 @@ const CoinDisplayPage = (props: any) => {
                 >
                   <div style={{ top: 10 }}>
                     {coin && coin.priceChange1h > 0 ? (
-                      <ArrowDropUpIcon />
+                      <ArrowDropUpIcon style={{ verticalAlign: "middle" }} />
                     ) : (
-                      <ArrowDropDownIcon />
+                      <ArrowDropDownIcon style={{ verticalAlign: "middle" }} />
                     )}
                     <span>{coin && coin.priceChange1h}%</span>
                   </div>
@@ -144,8 +148,9 @@ const CoinDisplayPage = (props: any) => {
               <div className={"flexcard"}>
                 <span className={"headings"}>
                   Volume <span className={"symbolsummary"}>24h</span>{" "}
+                  <InfoTwoToneIcon fontSize="small" />
                 </span>
-                <InfoTwoToneIcon fontSize="small" />
+
                 <span className={"price"}>
                   ${coin && Math.floor(coin.volume)}
                 </span>
@@ -158,9 +163,9 @@ const CoinDisplayPage = (props: any) => {
                 >
                   <div style={{ top: 10 }}>
                     {coin && coin.priceChange1d > 0 ? (
-                      <ArrowDropUpIcon />
+                      <ArrowDropUpIcon style={{ verticalAlign: "middle" }} />
                     ) : (
-                      <ArrowDropDownIcon />
+                      <ArrowDropDownIcon style={{ verticalAlign: "middle" }} />
                     )}
                     <span>{coin && coin.priceChange1d}%</span>
                   </div>
@@ -180,8 +185,11 @@ const CoinDisplayPage = (props: any) => {
                 }}
               >
                 <div>
-                  <span className={"headings"}>Circulating Supply</span>
-                  <InfoTwoToneIcon fontSize="small" />
+                  <span className={"headings"}>
+                    Circulating Supply{""}
+                    <InfoTwoToneIcon fontSize="small" />
+                  </span>
+
                   <br />
                   <span className={"price"}>
                     ${coin && Math.floor(coin.marketCap / coin.price)}
@@ -201,7 +209,7 @@ const CoinDisplayPage = (props: any) => {
                 </span>
 
                 <div style={{ textAlign: "left", margin: "5px" }}>
-                  <span>
+                  <span className={"headings"}>
                     Max Supply <InfoTwoToneIcon fontSize="small" />
                   </span>
 
@@ -214,7 +222,7 @@ const CoinDisplayPage = (props: any) => {
                     )}
                   </span>
                   <br />
-                  <span>
+                  <span className={"headings"}>
                     Total Supply <InfoTwoToneIcon fontSize="small" />
                   </span>
 
