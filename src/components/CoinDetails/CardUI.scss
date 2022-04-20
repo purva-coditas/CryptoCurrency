@@ -1,0 +1,79 @@
+.pricesummary {
+  text-align: center;
+  max-width: 25rem;
+  width: 20%;
+  margin: 2rem;
+  margin-top: -10rem;
+  position: relative;
+  background-color: #e71414;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.price {
+  padding: 10px 0;
+  font-weight: 500;
+  display: inline-block;
+}
+.symbolsummary {
+  text-align: center;
+  font-size: 12px;
+  max-width: 15rem;
+  width: 10%;
+  margin: 0.5rem;
+  margin-top: 10rem;
+  position: relative;
+  background-color: #dee2e6;
+  color: #696969;
+  border-radius: 5px;
+  padding: 5px;
+}
+.ranksummary {
+  text-align: left;
+  max-width: 25rem;
+  width: 20%;
+  position: relative;
+  background-color: #808080;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+}
+.marketnegative {
+  text-align: left;
+  font-weight: 500;
+  position: relative;
+  color: #e71414;
+  margin-bottom: 10px;
+}
+.marketpositive {
+  text-align: left;
+  font-weight: 500;
+  position: relative;
+  color: #14e714ce;
+  margin-bottom: 10px;
+}
+.linksummary {
+  box-sizing: content-box;
+  display: inline-block;
+  text-align: left;
+  margin-top: 30px;
+  position: relative;
+  background-color: #dee2e6;
+  color: rgb(8, 8, 8);
+  padding: 10px 0 20px 0;
+  border-radius: 5px;
+}
+
+.headings {
+  text-align: left;
+  color: rgb(169, 169, 169);
+}
+
+.flexcard {
+  margin-top: 20px;
+  width: 220px;
+  height: 300px;
+  padding: 10px 20px;
+  border-right: 1px solid #dee2e6;
+}
